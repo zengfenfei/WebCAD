@@ -1,0 +1,24 @@
+.pallette{
+	position:absolute;
+	width:300px;
+	border-right:2px blue dashed;
+	border-bottom:1px green solid;
+	visibility:hidden;
+}
+.pallette div{
+	color:red;
+	display:inline-block;
+	width:15px;
+	height:15px;
+	border:1px silver outset;
+}
+.pallette div:hover{
+	border-style:inset;
+}
+
+.picker{
+	color:silver;
+	text-shadow:green 2px -2px 1px;
+	font-weight:bold;
+	font-size:larger;
+}
