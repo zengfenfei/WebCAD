@@ -1,0 +1,9 @@
+@import "px_export_scale";
+
+@function px3($size) {
+    @return ceil($size / 3 * $px_export_scale) + px;
+}
+
+@function px2($size) {
+    @return ceil($size / 2 * $px_export_scale) + px;
+}

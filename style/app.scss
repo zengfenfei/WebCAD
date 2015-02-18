@@ -1,0 +1,12 @@
+@import "physical-px";
+
+#main-scene {
+	width: 100%;
+	height: 100%;
+}
+
+#ctrl {
+	#button {
+		width: px3(60);
+	}
+}

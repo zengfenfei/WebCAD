@@ -1,9 +1,8 @@
+<!DOCTYPE html>
 <html>
 <head>
-<link rel="icon" href="../../favicon.ico" type="image/x-icon" />
-<link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>WebDrawing</title>
+<meta name="viewport" content="width=device-width,initial-scale=.5,user-scalable=no"/>
+<title>Free mind</title>
 <link type="text/css" rel="stylesheet" href="css/colorPicker.css">
 <link type="text/css" rel="stylesheet" href="css/cad.css">
 <style>
@@ -11,6 +10,14 @@
 </head>
 
 <body>
+
+<div id="main-scene">
+	<canvas></canvas>
+</div>
+
+<div id="ctrl">
+	<button>Line</button>
+</div>
 
 <h1>WebCAD</h1>
 
@@ -59,8 +66,8 @@
 					onchange="ctx.drawable.style.miterLimit=this.value;" value="10"
 					size="3"> </label>
 			</div>
-			
-			
+
+
 
 			<div>
 				<h4>Compositing</h4>
@@ -91,9 +98,9 @@
 			</div>
 
 		</div>
-		
-		<div><div id=crd></div> <button onclick='ctx.restore()'>Restore</button> <input type=range id=scale /></div>
-		<div id=canvas>
+
+		<div><div id="crd"></div> <button onclick='ctx.restore()'>Restore</button> <input type=range id=scale /></div>
+		<div id="canvas">
 			<canvas></canvas>
 			<canvas></canvas>
 		</div>
@@ -121,7 +128,7 @@
 			var n=5;//n digits
 			crdText.nodeValue=x.toPrecision(n)+', '+y.toPrecision(n);
 		}
-	
+
 		var scale=document.getElementById('scale');
 		scale.min=ctx.scaleRange.min;
 		scale.max=ctx.scaleRange.max;
@@ -135,7 +142,7 @@
 			scale.value=sc;
 			scale.title=(sc*100).toFixed(1)+'%';
 		}
-		
+
 		var picker = new hc.widget.ColorPicker();
 		var fce=document.getElementById('fillColor');//fill color element
 		var sce=document.getElementById('strokeColor');//stroke color element
@@ -143,13 +150,13 @@
 		picker.regist(sce);
 		fce.onchange = function() {
 			for(var i in ctx.selected){
-			ctx.selected[i].style.fillStyle=this.value;	
+			ctx.selected[i].style.fillStyle=this.value;
 			}
 			ctx.repaintTop();
 		}
 		sce.onchange = function() {
 			for(var i in ctx.selected){
-				ctx.selected[i].style.strokeStyle=this.value;	
+				ctx.selected[i].style.strokeStyle=this.value;
 			}
 		}
 		function clearFill(){
