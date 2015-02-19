@@ -3,20 +3,30 @@
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=.5,user-scalable=no"/>
 <title>Free mind</title>
-<link type="text/css" rel="stylesheet" href="css/colorPicker.css">
-<link type="text/css" rel="stylesheet" href="css/cad.css">
-<style>
-</style>
+<link type="text/css" rel="stylesheet" href="out/dist/static/app.css">
+
 </head>
 
 <body>
 
 <div id="main-scene">
-	<canvas></canvas>
+	<canvas class="store"><!--
+		变化较少
+		1. 已经绘制好的元素
+	 --></canvas>
+	<canvas class="volatile"><!--
+	 变化频繁的层:
+		1. 光标位置
+		2. 当前绘制的元素
+	  --></canvas>
 </div>
 
 <div id="ctrl">
 	<button>Line</button>
+</div>
+
+<div id="status">
+
 </div>
 
 <h1>WebCAD</h1>
@@ -109,73 +119,7 @@
 		Scroll the wheel to scale the whole graph. Hold ctrl key and drag to move the whole graph.
 	</p>
 </body>
-<script src="js/core.js"></script>
-<script src="js/colorPicker.js"></script>
-<script src="js/graphics.js"></script>
-<script src="js/circle.js"></script>
-<script src="js/curve.js"></script>
-<script src="js/line.js"></script>
-<script src="js/rect.js"></script>
+<script type="text/javascript" src="lib/require.js"></script>
+<script type="text/javascript" src="src/app.js"></script>
 
-<script type="text/javascript">
-	try {
-		var ctx = new hc.graphic.DrawingContext(document.getElementById('canvas'));
-		var crdLabel=document.getElementById('crd');
-		crdLabel.innerHTML='';
-		var crdText=document.createTextNode('000.00, 000.00');
-		crdLabel.appendChild(crdText);
-		ctx.onCursorMove=function(x,y){
-			var n=5;//n digits
-			crdText.nodeValue=x.toPrecision(n)+', '+y.toPrecision(n);
-		}
-
-		var scale=document.getElementById('scale');
-		scale.min=ctx.scaleRange.min;
-		scale.max=ctx.scaleRange.max;
-		scale.onchange=function(){
-			ctx.scale=this.value;
-			ctx.modelContext2d.lineWidth=1/ctx.scale;
-			ctx.repaint();
-			this.title=(this.value*100).toFixed(1)+'%';
-		}
-		ctx.onScale=function(sc){
-			scale.value=sc;
-			scale.title=(sc*100).toFixed(1)+'%';
-		}
-
-		var picker = new hc.widget.ColorPicker();
-		var fce=document.getElementById('fillColor');//fill color element
-		var sce=document.getElementById('strokeColor');//stroke color element
-		picker.regist(fce);
-		picker.regist(sce);
-		fce.onchange = function() {
-			for(var i in ctx.selected){
-			ctx.selected[i].style.fillStyle=this.value;
-			}
-			ctx.repaintTop();
-		}
-		sce.onchange = function() {
-			for(var i in ctx.selected){
-				ctx.selected[i].style.strokeStyle=this.value;
-			}
-		}
-		function clearFill(){
-			for(var i in ctx.selected){
-				delete ctx.selected[i].style.fillStyle;
-				}
-				ctx.repaintTop();
-		}
-		function clearStroke(){
-			for(var i in ctx.selected){
-				delete ctx.selected[i].style.strokeStyle;
-				}
-		}
-	} catch (e) {
-		var m = 'Error!';
-		for ( var p in e) {
-			m += '\n' + p + ':' + e[p];
-		}
-		alert(m);
-	}
-</script>
 </html>

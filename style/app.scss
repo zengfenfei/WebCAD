@@ -1,8 +1,20 @@
 @import "physical-px";
 
-#main-scene {
+.match-parent {
+	position: absolute;
+	left: 0;
+	top: 0;
 	width: 100%;
 	height: 100%;
+}
+
+#main-scene {
+	@extend .match-parent;
+	background: #000;
+
+	canvas.volatile {
+		@extend .match-parent;
+	}
 }
 
 #ctrl {
