@@ -3,15 +3,19 @@ define(function (require) {
 	var bind = require('appbase/polyfill/bind');
 
 	function DrawableLayer(canvas) {
-		canvas.width = canvas.clientWidth;
-		canvas.height = canvas.clientHeight;
-
 		this.context = canvas.getContext('2d');
 		this.drawables = [];
 		this.paintingId = null;
 		this._paint = bind(this._paint, this);
+
+		this.updateSize();
 	}
 
+	DrawableLayer.prototype.updateSize = function() {
+		var canvas = this.context.canvas;
+		canvas.width = canvas.clientWidth;
+		canvas.height = canvas.clientHeight;
+	};
 	DrawableLayer.prototype.addDrawable = function(d) {
 		if (this.drawables.indexOf(d) != -1) {
 			console.warn('Drawable already in the layer.');
@@ -39,7 +43,7 @@ define(function (require) {
 	// Draw the frame
 	DrawableLayer.prototype._paint = function() {
 		var c = this.context.canvas;
-		c.width = c.width;
+		c.width = c.width;	//Force clear canvas
 		//this.context.clearRect(0, 0, c.width, c.height);
 		for(var i = 0, len = this.drawables.length; i < len; i++) {
 			this.context.save();

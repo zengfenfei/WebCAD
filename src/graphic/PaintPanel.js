@@ -15,8 +15,8 @@ define(function (require) {
 	function init (self) {
 		self.holder.addEventListener('touchstart', function (evt) {
 			evt.preventDefault();
-			evt.stopPropagation();
-		}, true);
+			//evt.stopPropagation();
+		}, false);
 		drawCursorCross(self);
 	}
 
@@ -30,7 +30,9 @@ define(function (require) {
 			var touches = evt.targetTouches;
 			for (var i = touches.length - 1; i >= 0; i--) {
 				var t = touches[i];
-				var cross = new Cross(t.clientX, t.clientY);
+				var x = Math.floor(t.clientX) + 0.5;
+				var y = Math.floor(t.clientY) + 0.5;
+				var cross = new Cross(x, y);
 				self.touchIndicatorDrawables.push(cross);
 				self.volatileLayer.addDrawable(cross);
 			};

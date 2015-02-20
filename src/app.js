@@ -23,6 +23,17 @@ require.config({
 require(["graphic/PaintPanel"], function (PaintPanel) {
 	var drawingContext = new PaintPanel(document.getElementById('main-scene'));
 });
+
+
+document.querySelector('#status #size').textContent = innerWidth + ', ' + innerHeight;
+var coordsEl = document.querySelector('#status #coords');
+function showCoords(evt) {
+	var t=evt.touches[0];
+	coordsEl.textContent = t.clientX + ', '+t.clientY;
+}
+window.addEventListener('touchstart', showCoords, true);
+window.addEventListener('touchmove', showCoords, true);
+
 /*
 
 var ctx = new hc.graphic.DrawingContext(document.getElementById('canvas'));
