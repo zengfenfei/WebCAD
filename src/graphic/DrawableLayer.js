@@ -8,13 +8,14 @@ define(function (require) {
 		this.paintingId = null;
 		this._paint = bind(this._paint, this);
 
-		this.updateSize();
+		this.resized();
 	}
 
-	DrawableLayer.prototype.updateSize = function() {
+	DrawableLayer.prototype.resized = function() {
 		var canvas = this.context.canvas;
 		canvas.width = canvas.clientWidth;
 		canvas.height = canvas.clientHeight;
+		this.repaint();
 	};
 	DrawableLayer.prototype.addDrawable = function(d) {
 		if (this.drawables.indexOf(d) != -1) {

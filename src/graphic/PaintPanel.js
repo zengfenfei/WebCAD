@@ -18,6 +18,11 @@ define(function (require) {
 			//evt.stopPropagation();
 		}, false);
 		drawCursorCross(self);
+
+		window.addEventListener('resize', function (evt) {
+			self.storeLayer.resized();
+			self.volatileLayer.resized();
+		}, false);
 	}
 
 	function drawCursorCross (self) {
