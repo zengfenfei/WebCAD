@@ -1,0 +1,49 @@
+@font-face {
+	font-family: "Flaticon";
+	src: url("flaticon.eot");
+	src: url("flaticon.eot#iefix") format("embedded-opentype"),
+	url("flaticon.woff") format("woff"),
+	url("flaticon.ttf") format("truetype"),
+	url("flaticon.svg") format("svg");
+	font-weight: normal;
+	font-style: normal;
+}
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
+	font-family: Flaticon;
+        font-size: 20px;
+font-style: normal;
+margin-left: 20px;
+}.flaticon-blank31:before {
+	content: "\e000";
+}
+.flaticon-check54:before {
+	content: "\e001";
+}
+.flaticon-circle107:before {
+	content: "\e002";
+}
+.flaticon-circle46:before {
+	content: "\e003";
+}
+.flaticon-cursor12:before {
+	content: "\e004";
+}
+.flaticon-dashedline:before {
+	content: "\e005";
+}
+.flaticon-hexagon7:before {
+	content: "\e006";
+}
+.flaticon-irregular10:before {
+	content: "\e007";
+}
+.flaticon-plain16:before {
+	content: "\e008";
+}
+.flaticon-starshape1:before {
+	content: "\e009";
+}
+.flaticon-uparrow11:before {
+	content: "\e00a";
+}
