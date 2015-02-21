@@ -1,21 +1,13 @@
 require.config({
     baseUrl:'src',
-    waitSeconds: 0,
     paths: {
         // Core Libraries
-        "pagemanager": '../lib/pagemanager',
-        "jquery": "../lib/zepto.min",
-        "text": "../lib/text",
-        "QQMapAPI": "http://map.qq.com/api/js?v=2.exp&module=amd",
-        iScroll: "../lib/iscroll-lite",
+        Hammer: '../lib/hammer.min',
         appbase: '../lib/appbase'
     },
     shim: {
-        "jquery": {
-            "exports": "Zepto"
-        },
-        iScroll: {
-            exports: 'IScroll'
+        Hammer: {
+            exports: "Hammer"
         }
     }
 });

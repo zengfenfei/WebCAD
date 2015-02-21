@@ -1,6 +1,7 @@
 define(function (require) {
 	var DrawableLayer = require('./DrawableLayer');
 	var Cross = require('./drawables/Cross');
+	var Hammer = require('Hammer');
 
 	function PaintPanel (holder) {
 		this.holder = holder;
@@ -26,6 +27,7 @@ define(function (require) {
 	}
 
 	function drawCursorCross (self) {
+		console.log(Hammer);
 		self.holder.addEventListener('touchmove', function (evt) {
 			var tIndicators = self.touchIndicatorDrawables;
 			for (var i = tIndicators.length - 1; i >= 0; i--) {
