@@ -33,7 +33,24 @@ define(function (require) {
 	}
 
 	function addListeners (self) {
-		self.holder.addEventListener('touchmove', function (evt) {
+		self.holder.addEventListener('touchstart', createTouchListener('onTouchStart', self), false);
+		self.holder.addEventListener('touchmove', createTouchListener('onTouchMove', self), false);
+		self.holder.addEventListener('touchend', createTouchListener('onTouchEnd', self), false);
+
+		self.holder.addEventListener('mousemove', function (evt) {
+			var x = evt.offsetX + 0.5;
+			var y = evt.offsetY + 0.5;
+			var pts = [new Point(x, y)];
+			dispatchInteractEvent(self, 'onMove', [pts, evt]);
+		}, false);
+
+		window.addEventListener('resize', function (evt) {
+			dispatchInteractEvent(self, 'onResize', [evt]);
+		}, false);
+	}
+
+	function createTouchListener (evtName, self) {
+		return function (evt) {
 			var pts = [];
 			var touches = evt.targetTouches;
 			for (var i = touches.length - 1; i >= 0; i--) {
@@ -42,19 +59,8 @@ define(function (require) {
 				var y = Math.floor(t.clientY) + 0.5;
 				pts.push(new Point(x, y));
 			};
-			dispatchInteractEvent(self, 'onMove', [pts, self, evt]);
-		}, false);
-
-		self.holder.addEventListener('mousemove', function (evt) {
-			var x = evt.offsetX + 0.5;
-			var y = evt.offsetY + 0.5;
-			var pts = [new Point(x, y)];
-			dispatchInteractEvent(self, 'onMove', [pts, self, evt]);
-		}, false);
-
-		window.addEventListener('resize', function (evt) {
-			dispatchInteractEvent(self, 'onResize', [evt]);
-		}, false);
+			dispatchInteractEvent(self, evtName, [pts, self, evt]);
+		};
 	}
 
 	function dispatchInteractEvent (self, name, argv) {

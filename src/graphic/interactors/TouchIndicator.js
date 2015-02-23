@@ -21,8 +21,8 @@ define(function (require) {
 		self.showPanelSize && self.showPanelSize(c.width, c.height);
 	}
 
-	TouchIndicator.prototype.onMove = function(pts, paintPanel) {
-		var volatileLayer = paintPanel.volatileLayer;
+	TouchIndicator.prototype.onTouchMove = function(pts) {
+		var volatileLayer = this.paintPanel.volatileLayer;
 		for(var i = 0, len = this.touchDrawables.length; i < len; i++) {
 			volatileLayer.removeDrawable(this.touchDrawables[i]);
 		}
@@ -35,6 +35,8 @@ define(function (require) {
 		volatileLayer.repaint();
 		this.showTouches && this.showTouches(pts);
 	};
+
+	TouchIndicator.prototype.onTouchStart = TouchIndicator.prototype.onTouchMove;
 
 	TouchIndicator.prototype.onResize = function() {
 		showPanelSize(this);
