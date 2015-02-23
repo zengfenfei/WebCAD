@@ -1,28 +1,3 @@
-// drawline and its listener
-hc.graphic.Line = function() {
-	hc.graphic.Drawable.call(this);
-	this.points = [];
-	this.path = function(ctx) {
-		var firstPoint = true;
-		for ( var i in this.points) {
-			if (firstPoint) {
-				ctx.moveTo(this.points[i].x, this.points[i].y);
-				firstPoint = false;
-			} else {
-				ctx.lineTo(this.points[i].x, this.points[i].y);
-			}
-		}
-	};
-
-	this.getCtrlPts = function(ctx) {
-		var rings = [];
-		for ( var i = 0; i < this.points.length; i++) {
-			var p = this.points[i];
-			rings.push(new hc.graphic.ControlRing(p, ctx.toUILoc(p)));
-		}
-		return rings;
-	};
-};
 /**
  * The listener for create a line drawable
  */

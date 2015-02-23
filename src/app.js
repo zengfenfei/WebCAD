@@ -13,18 +13,16 @@ require.config({
 });
 
 require(["graphic/PaintPanel"], function (PaintPanel) {
-	var drawingContext = new PaintPanel(document.getElementById('main-scene'));
+	var paintPanel = new PaintPanel(document.getElementById('main-scene'));
+	var coordsEl = document.querySelector('#status #coords');
+	paintPanel.touchIndicator.showTouches = function(pts) {
+		coordsEl.innerHTML = '';
+		for (var i = pts.length - 1; i >= 0; i--) {
+			coordsEl.innerHTML += pts[i].x + ', ' + pts[i].y + '<br>';
+		};
+	};
 });
 
-
-document.querySelector('#status #size').textContent = innerWidth + ', ' + innerHeight;
-var coordsEl = document.querySelector('#status #coords');
-function showCoords(evt) {
-	var t=evt.touches[0];
-	coordsEl.textContent = t.clientX + ', '+t.clientY;
-}
-window.addEventListener('touchstart', showCoords, true);
-window.addEventListener('touchmove', showCoords, true);
 
 /*
 
