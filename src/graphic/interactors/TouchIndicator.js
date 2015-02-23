@@ -1,9 +1,24 @@
 define(function (require) {
 	var Cross = require('../drawables/Cross');
 
-	function TouchIndicator () {
+	function TouchIndicator (paintPanel) {
+		this.paintPanel = paintPanel;
 		this.touchDrawables = [];
-		this.showTouches = null; // function
+		this.showTouches = null;	// function
+		this.showPanelSize = null;	//function
+
+		init(this);
+	}
+
+	function init (self) {
+		setTimeout(function () {
+			showPanelSize(self);
+		}, 0);
+	}
+
+	function showPanelSize (self) {
+		var c = self.paintPanel.volatileLayer.context.canvas;
+		self.showPanelSize && self.showPanelSize(c.width, c.height);
 	}
 
 	TouchIndicator.prototype.onMove = function(pts, paintPanel) {
@@ -19,6 +34,10 @@ define(function (require) {
 		}
 		volatileLayer.repaint();
 		this.showTouches && this.showTouches(pts);
+	};
+
+	TouchIndicator.prototype.onResize = function() {
+		showPanelSize(this);
 	};
 
 	return TouchIndicator;

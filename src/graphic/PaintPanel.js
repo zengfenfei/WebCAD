@@ -11,7 +11,7 @@ define(function (require) {
 		this.volatileLayer = new DrawableLayer(holder.querySelector('canvas.volatile'));
 
 		this.interactors = [];
-		this.touchIndicator = new TouchIndicator();
+		this.touchIndicator = new TouchIndicator(this);
 
 		init(this);
 	}
@@ -42,21 +42,26 @@ define(function (require) {
 				var y = Math.floor(t.clientY) + 0.5;
 				pts.push(new Point(x, y));
 			};
-			for (i = 0; i < self.interactors.length; i++) {
-				var a = self.interactors[i];
-				a.onMove && a.onMove(pts, self, evt);
-			};
+			dispatchInteractEvent(self, 'onMove', [pts, self, evt]);
 		}, false);
 
 		self.holder.addEventListener('mousemove', function (evt) {
 			var x = evt.offsetX + 0.5;
 			var y = evt.offsetY + 0.5;
 			var pts = [new Point(x, y)];
-			for (i = 0; i < self.interactors.length; i++) {
-				var a = self.interactors[i];
-				a.onMove && a.onMove(pts, self, evt);
-			};
+			dispatchInteractEvent(self, 'onMove', [pts, self, evt]);
 		}, false);
+
+		window.addEventListener('resize', function (evt) {
+			dispatchInteractEvent(self, 'onResize', [evt]);
+		}, false);
+	}
+
+	function dispatchInteractEvent (self, name, argv) {
+		for (i = 0; i < self.interactors.length; i++) {
+			var a = self.interactors[i];
+			a[name] && a[name].apply(a, argv);
+		}
 	}
 
 	return PaintPanel;

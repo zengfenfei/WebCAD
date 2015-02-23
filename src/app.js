@@ -21,6 +21,11 @@ require(["graphic/PaintPanel"], function (PaintPanel) {
 			coordsEl.innerHTML += pts[i].x + ', ' + pts[i].y + '<br>';
 		};
 	};
+
+	var sizeEl = document.querySelector('#status #size');
+	paintPanel.touchIndicator.showPanelSize = function (w, h) {
+		sizeEl.innerHTML = w + ', ' + h;
+	};
 });
 
 
