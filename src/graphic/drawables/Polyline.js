@@ -1,9 +1,9 @@
 define(function (require) {
-	function PolyLine () {
+	function Polyline () {
 		this.points = [];
 	}
 
-	PolyLine.prototype.onDraw = function(ctx) {
+	Polyline.prototype.onDraw = function(ctx) {
 		if (this.points.length<2) {
 			return;
 		}
@@ -17,5 +17,5 @@ define(function (require) {
 		ctx.stroke();
 	};
 
-	return PolyLine;
+	return Polyline;
 });

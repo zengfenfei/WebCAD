@@ -12,12 +12,31 @@ define(function (require) {
 
 		this.interactors = [];
 		this.touchIndicator = new TouchIndicator(this);
+		this.currentInteractorId = null;
+		this.INTERACTORS = {};
 
 		init(this);
 	}
 
+	PaintPanel.prototype.commit = function(d) {
+		this.storeLayer.addDrawable(d);
+		this.storeLayer.repaint();
+		this.setInteractor(null);
+	};
+
+	PaintPanel.prototype.setInteractor = function(id) {
+		if (this.currentInteractorId) {
+			var it = this.INTERACTORS[this.currentInteractorId];
+			var i = this.interactors.indexOf(it);
+			this.interactors.splice(i, 1);
+		}
+		var newInteractor = this.INTERACTORS[id];
+		newInteractor && this.interactors.push(newInteractor);
+	};
+
 	function init (self) {
 		self.interactors.push(self.touchIndicator);
+		registerInteractors(self);
 
 		self.holder.addEventListener('touchstart', function (evt) {
 			evt.preventDefault();
@@ -30,6 +49,14 @@ define(function (require) {
 		}, false);
 
 		addListeners(self);
+	}
+
+	function registerInteractors (self) {
+		var a = [require('./interactors/PolylineInteractor')];
+		for (var i = a.length - 1; i >= 0; i--) {
+			var it = new a[i](self);
+			self.INTERACTORS[it.id] = it;
+		};
 	}
 
 	function addListeners (self) {
@@ -47,6 +74,11 @@ define(function (require) {
 		window.addEventListener('resize', function (evt) {
 			dispatchInteractEvent(self, 'onResize', [evt]);
 		}, false);
+
+		var hammertime = new Hammer(self.holder);
+		hammertime.on('tap', function (evt) {
+			dispatchInteractEvent(self, 'onTap');
+		});
 	}
 
 	function createTouchListener (evtName, self) {

@@ -12,8 +12,25 @@ require.config({
     }
 });
 
-require(["graphic/PaintPanel"], function (PaintPanel) {
+require(["graphic/PaintPanel", 'Hammer'], function (PaintPanel, Hammer) {
 	var paintPanel = new PaintPanel(document.getElementById('main-scene'));
+	var ctrlEls = document.querySelectorAll('#ctrl i');
+	var selectedCtrlEl;
+	for (var i = ctrlEls.length - 1; i >= 0; i--) {
+		var ctrlEl = ctrlEls[i];
+		var ctrlName = ctrlEl.dataset.ctrlName;
+		if (ctrlName) {
+			var hammertime = new Hammer(ctrlEl);
+			hammertime.on('tap', function (evt) {
+				selectedCtrlEl && selectedCtrlEl.classList.remove('selected');
+				selectedCtrlEl = evt.target;
+				selectedCtrlEl.classList.add('selected');
+				var ctrlName = selectedCtrlEl.dataset.ctrlName;
+				paintPanel.setInteractor(ctrlName);
+			});
+		}
+	};
+
 	var coordsEl = document.querySelector('#status #coords');
 	paintPanel.touchIndicator.showTouches = function(pts) {
 		coordsEl.innerHTML = '';

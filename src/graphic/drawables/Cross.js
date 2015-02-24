@@ -5,10 +5,7 @@ define(function () {
 	}
 
 	Cross.prototype.onDraw = function(ctx) {
-		ctx.strokeStyle = '#fff';
-		ctx.lineWidth = 1;
 		var c = ctx.canvas;
-
 		ctx.beginPath();
 		ctx.moveTo(this.x, 0);
 		ctx.lineTo(this.x, c.height);

@@ -25,6 +25,11 @@ html, body {
 #ctrl {
 	i:before {
 		font-size: 48px;
+		padding: 2px;
+	}
+
+	i.selected:before {
+		border: 1px solid;
 	}
 }
 

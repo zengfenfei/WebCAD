@@ -8,7 +8,13 @@ define(function (require) {
 		this.paintingId = null;
 		this._paint = bind(this._paint, this);
 
-		this.resized();
+		init(this);
+	}
+
+	DrawableLayer.prototype.DEFAULT_STROKE_STYLE = '#FFF';
+
+	function init (self) {
+		self.resized();
 	}
 
 	DrawableLayer.prototype.resized = function() {
@@ -46,6 +52,7 @@ define(function (require) {
 		var c = this.context.canvas;
 		c.width = c.width;	//Force clear canvas
 		//this.context.clearRect(0, 0, c.width, c.height);
+		this.context.strokeStyle = this.DEFAULT_STROKE_STYLE;
 		for(var i = 0, len = this.drawables.length; i < len; i++) {
 			this.context.save();
 			this.drawables[i].onDraw(this.context);
